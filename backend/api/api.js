@@ -83,4 +83,42 @@ router.post('/insertInto', async (request, response) => {
         });
     }
 });
+
+router.get('/selectCategories', async (request, response) => {
+    try {
+        const selectCategories = await database.allCategories();
+        response.status(200).json({
+            message: 'Ez a végpont működik.',
+            categories: selectCategories
+        });
+    } catch (error) {
+        console.error(error);
+    }
+});
+router.post('/insertCategories', async (request, response) => {
+    try {
+        const body = request.body;
+        const insertCategories = await database.insertCategories(body.name);
+        response.status(200).json({
+            message: 'Ez a végpont működik.',
+            insertId: insertCategories
+        });
+    } catch (error) {
+        console.error(error);
+    }
+});
+router.post('/updateCategories/:id', async (request, response) => {
+    try {
+        const id = request.params.id;
+        const body = request.body;
+        const updateCategories = await database.updateCategories(id, body.name);
+        response.status(200).json({
+            message: 'Ez a végpont működik.',
+            update: updateCategories
+        });
+    } catch (error) {
+        console.error(error);
+    }
+});
+
 module.exports = router;

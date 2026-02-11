@@ -9,6 +9,15 @@ const pool = mysql.createPool({
     connectionLimit: 10,
     queueLimit: 0
 });
+const pool2 = mysql.createPool({
+    host: '127.0.0.1',
+    user: 'root',
+    password: '',
+    database: 'feladat1',
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
+});
 
 //!SQL Queries
 async function selectall() {
@@ -51,10 +60,34 @@ async function selectKaja(kaja) {
         throw new Error('Az étel neve vagy finomsága már létezik az adatbázisban');
     }
 }
+
+async function allCategories() {
+    try {
+        const query = `SELECT * FROM categories`;
+        const [rows] = await pool2.execute(query);
+        return rows;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+async function insertCategories(name) {
+    try {
+        const query = `INSERT INTO categories(name) VALUES(?)`;
+        const [rows] = await pool2.execute(query, [name]);
+        return rows.insertId;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
+async function updateCategories(id, name) {}
+
 //!Export
 module.exports = {
     selectall,
     insertInto,
     averagePrice,
-    selectKaja
+    selectKaja,
+    allCategories,
+    insertCategories
 };
