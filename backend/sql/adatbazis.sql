@@ -1,0 +1,12 @@
+CREATE DATABASE suloskaja
+DEFAULT CHARACTER SET utf8
+COLLATE utf8_hungarian_ci;
+
+USE suloskaja;
+
+CREATE TABLE kaja(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nev VARCHAR(67) NOT NULL UNIQUE,
+    ar INT NOT NULL,
+    finom VARCHAR(67) NOT NULL UNIQUE
+);

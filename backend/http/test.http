@@ -1,0 +1,26 @@
+GET http://127.0.0.1:3000/api/selectAll
+
+###
+GET http://127.0.0.1:3000/api/averagePrice
+
+###
+
+POST http://127.0.0.1:3000/api/insertInto
+Content-Type: application/json
+
+{
+    "nev": "Gyrmo",
+    "ar": 67,
+    "finom": "eeh!"
+}
+###
+
+POST http://127.0.0.1:3000/api/selectKaja
+Content-Type: application/json
+
+{
+    "nev": "Pizza"
+}
+
+
+

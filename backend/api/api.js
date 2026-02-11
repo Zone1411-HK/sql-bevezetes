@@ -27,7 +27,7 @@ router.get('/test', (request, response) => {
 });
 
 //?GET /api/testsql
-router.get('/testsql', async (request, response) => {
+router.get('/selectAll', async (request, response) => {
     try {
         const selectall = await database.selectall();
         response.status(200).json({
@@ -40,5 +40,47 @@ router.get('/testsql', async (request, response) => {
         });
     }
 });
+router.get('/averagePrice', async (request, response) => {
+    try {
+        const averagePrice = await database.averagePrice();
+        console.log(averagePrice);
+        response.status(200).json({
+            message: 'Ez a végpont működik.',
+            results: averagePrice
+        });
+    } catch (error) {
+        response.status(500).json({
+            message: 'Ez a végpont nem működik.'
+        });
+    }
+});
+router.post('/selectKaja', async (request, response) => {
+    try {
+        const body = request.body;
+        const kaj = await database.selectKaja(body.nev);
+        response.status(200).json({
+            message: 'Ez a végpont működik.',
+            results: kaj
+        });
+    } catch (error) {
+        response.status(500).json({
+            message: 'Ez a végpont nem működik.'
+        });
+    }
+});
 
+router.post('/insertInto', async (request, response) => {
+    try {
+        const body = request.body;
+        const insertInto = await database.insertInto(body.nev, body.ar, body.finom);
+        response.status(200).json({
+            message: 'Ez a végpont működik.',
+            insertId: insertInto
+        });
+    } catch (error) {
+        response.status(500).json({
+            message: 'Ez a végpont nem működik.'
+        });
+    }
+});
 module.exports = router;
