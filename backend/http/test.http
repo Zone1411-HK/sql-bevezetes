@@ -23,4 +23,70 @@ Content-Type: application/json
 }
 
 
+###
+GET http://127.0.0.1:3000/api/selectUsers
 
+###
+
+POST http://127.0.0.1:3000/api/addUsers
+Content-Type: application/json
+
+{
+    "name": "asd",
+    "email": "asd@a.com"
+}
+###
+
+POST http://127.0.0.1:3000/api/updateUsers/1
+Content-Type: application/json
+
+{
+    "name": "b",
+    "email": "b@a.com"
+}
+###
+
+POST http://127.0.0.1:3000/api/deleteUser/1
+Content-Type: application/json
+
+{
+    "name": "b",
+    "email": "b@a.com"
+}
+
+###
+GET http://127.0.0.1:3000/api/selectProducts
+###
+
+POST http://127.0.0.1:3000/api/addProducts
+Content-Type: application/json
+
+{
+    "name": "asd",
+    "price": 1,
+    "stock": 1
+}
+###
+
+POST http://127.0.0.1:3000/api/updateProducts/1
+Content-Type: application/json
+
+{
+    "name": "da",
+    "price": 10,
+    "stock": 10
+}
+###
+POST http://127.0.0.1:3000/api/deleteProducts/1
+Content-Type: application/json
+###
+GET http://127.0.0.1:3000/api/inventory
+###
+
+POST http://127.0.0.1:3000/api/inventoryAdd
+Content-Type: application/json
+
+{
+    "product_id": 2,
+    "quantity": 1
+}

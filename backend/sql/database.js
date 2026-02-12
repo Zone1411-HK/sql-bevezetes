@@ -83,17 +83,178 @@ async function insertCategories(name) {
 async function updateCategories(id, name) {
     try {
         const query = `
-        UPDATE categories.name 
+        UPDATE categories 
         SET name = ?
         WHERE id = ?
         `;
         const [rows] = await pool2.execute(query, [name, id]);
-        return rows.insertId;
+        return rows.affectedRows;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+async function deleteCategory(id) {
+    try {
+        const query = `
+        DELETE FROM categories
+        WHERE id = ? 
+        `;
+        const [rows] = await pool2.execute(query, [id]);
+        return rows;
     } catch (error) {
         throw new Error(error);
     }
 }
 
+async function selectUsers() {
+    try {
+        const query = `SELECT * FROM users`;
+        const [rows] = await pool2.execute(query);
+        return rows;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
+async function addUsers(name, email) {
+    try {
+        const query = `
+        INSERT INTO users(name, email)
+        VALUES(?, ?)
+        `;
+        const [rows] = await pool2.execute(query, [name, email]);
+        return rows;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+async function updateUsers(name, email, id) {
+    try {
+        const query = `
+        UPDATE users
+        SET name = ?, email = ?
+        WHERE id = ?
+        `;
+        const [rows] = await pool2.execute(query, [name, email, id]);
+        return rows;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+async function deleteUser(id) {
+    try {
+        const query = `
+        DELETE FROM users
+        WHERE id = ?
+        `;
+        const [rows] = await pool2.execute(query, [id]);
+        return rows;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+async function selectProducts() {
+    try {
+        const query = `
+        SELECT *
+        FROM products
+        `;
+        const [rows] = await pool2.execute(query);
+        return rows;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
+async function addProducts(name, price, stock) {
+    try {
+        const query = `
+        INSERT INTO products(name, price, stock)
+        VALUES(?, ?, ?)
+        `;
+        const [rows] = await pool2.execute(query, [name, price, stock]);
+        return rows;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+async function updateProducts(name, price, stock, id) {
+    try {
+        const query = `
+        UPDATE products
+        SET name = ?, price = ?, stock = ?
+        WHERE id = ?
+        `;
+        const [rows] = await pool2.execute(query, [name, price, stock, id]);
+        return rows;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
+async function deleteProduct(id) {
+    try {
+        const query = `
+        DELETE FROM products
+        WHERE id = ?
+        `;
+        const [rows] = await pool2.execute(query, [id]);
+        return rows;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+async function selectInventory() {
+    try {
+        const query = `
+        SELECT *
+        FROM inventory
+        `;
+        const [rows] = await pool2.execute(query);
+        return rows;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
+async function inventoryAdd(product_id, quantity) {
+    try {
+        const query = `
+        INSERT INTO inventory(product_id, quantity)
+        VALUES(?, ?)
+        `;
+        const [rows] = await pool2.execute(query, [product_id, quantity]);
+        return rows;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+async function updateinventory(name, price, stock, id) {
+    try {
+        const query = `
+        UPDATE inventory
+        SET name = ?, price = ?, stock = ?
+        WHERE id = ?
+        `;
+        const [rows] = await pool2.execute(query, [name, price, stock, id]);
+        return rows;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
+async function deleteinventory(id) {
+    try {
+        const query = `
+        DELETE FROM inventory
+        WHERE id = ?
+        `;
+        const [rows] = await pool2.execute(query, [id]);
+        return rows;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
 //!Export
 module.exports = {
     selectall,
@@ -102,5 +263,18 @@ module.exports = {
     selectKaja,
     allCategories,
     insertCategories,
-    updateCategories
+    updateCategories,
+    deleteCategory,
+    selectUsers,
+    addUsers,
+    updateUsers,
+    deleteUser,
+    selectProducts,
+    addProducts,
+    updateProducts,
+    deleteProduct,
+    selectInventory,
+    inventoryAdd,
+    updateinventory,
+    deleteinventory
 };
