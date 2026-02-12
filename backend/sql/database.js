@@ -80,7 +80,19 @@ async function insertCategories(name) {
     }
 }
 
-async function updateCategories(id, name) {}
+async function updateCategories(id, name) {
+    try {
+        const query = `
+        UPDATE categories.name 
+        SET name = ?
+        WHERE id = ?
+        `;
+        const [rows] = await pool2.execute(query, [name, id]);
+        return rows.insertId;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
 
 //!Export
 module.exports = {
@@ -89,5 +101,6 @@ module.exports = {
     averagePrice,
     selectKaja,
     allCategories,
-    insertCategories
+    insertCategories,
+    updateCategories
 };
