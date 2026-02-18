@@ -295,4 +295,12 @@ router.post('/deleteinventory/:id', async (request, response) => {
         console.error(error);
     }
 });
+
+router.get('/import', async (request, response) => {
+    try {
+        await database.szoImport();
+    } catch (error) {
+        console.error(error);
+    }
+});
 module.exports = router;

@@ -1,4 +1,5 @@
 const mysql = require('mysql2/promise');
+const fs = require('fs/promises');
 
 const pool = mysql.createPool({
     host: '127.0.0.1',
@@ -14,6 +15,15 @@ const pool2 = mysql.createPool({
     user: 'root',
     password: '',
     database: 'feladat1',
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
+});
+const pool3 = mysql.createPool({
+    host: '127.0.0.1',
+    user: 'root',
+    password: '',
+    database: 'szogyak',
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
@@ -255,6 +265,30 @@ async function deleteinventory(id) {
         throw new Error(error);
     }
 }
+
+const readTextFile = async (filePath) => {
+    try {
+        const text = await fs.readFile(filePath, 'utf8');
+        return text;
+    } catch (err) {
+        throw new Error(`Olvasási hiba: (text): ${err.message}`);
+    }
+};
+
+async function szoImport() {
+    try {
+        let text = (await readTextFile('../backend/sql/szo10000.csv')).toString().split('\n');
+        for (let i = 0; i < text.length; i++) {
+            text[i] = text[i].split(';');
+        }
+
+        console.log(text);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+szoImport();
 //!Export
 module.exports = {
     selectall,

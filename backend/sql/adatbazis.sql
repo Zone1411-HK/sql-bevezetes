@@ -45,3 +45,16 @@ CREATE TABLE inventory(
     quantity INT NOT NULL,
     FOREIGN KEY (product_id) REFERENCES products(id)
 );
+
+CREATE DATABASE szogyak
+DEFAULT CHARACTER SET utf8
+COLLATE utf8_hungarian_ci;
+
+USE szogyak;
+
+CREATE TABLE szavak(
+    azon INT NOT NULL,
+    szoto VARCHAR(200) NOT NULL,
+    szofaj VARCHAR(200) NOT NULL,
+    gyakori INT NOT NULL
+);
