@@ -389,4 +389,16 @@ router.get('/jegyek/:diakId', async (request, response) => {
         console.error(error);
     }
 });
+
+router.post('/jegyek', async (request, response) => {
+    try {
+        let body = request.body;
+        const fields = await database.ujJegy(body.diakId, body.tanarId, body.tantargy, body.jegy);
+        response.status(200).json({
+            Status: 'Success'
+        });
+    } catch (error) {
+        console.error(error);
+    }
+});
 module.exports = router;

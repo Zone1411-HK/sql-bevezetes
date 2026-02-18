@@ -401,6 +401,17 @@ async function jegyek(diakId) {
     }
 }
 
+async function ujJegy(diakId, tanarId, tantargy, jegy) {
+    try {
+        const sql = `
+        INSERT INTO jegy(diak_id, tanar_id, tantargy, jegy, datum)
+        VALUES(?,?,?,?, NOW())
+        `;
+        const [fields] = await pool4.execute(sql, [diakId, tanarId, tantargy, jegy]);
+        return fields;
+    } catch (error) {}
+}
+
 //!Export
 module.exports = {
     selectall,
@@ -430,5 +441,6 @@ module.exports = {
     szofajok,
     tobbszoros,
     diakok,
-    jegyek
+    jegyek,
+    ujJegy
 };

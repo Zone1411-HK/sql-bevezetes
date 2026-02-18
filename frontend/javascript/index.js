@@ -10,6 +10,22 @@ async function GET(url) {
     }
 }
 
+async function POST(url, data) {
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        if (!response.ok) {
+            throw new Error(`${response.status} ${response.statusText}`);
+        }
+        return await response.json();
+    } catch (error) {
+        throw new Error(`${error.message}`);
+    }
+}
+
 async function generateStudents() {
     const tbody = document.querySelector('tbody');
     tbody.replaceChildren();
@@ -40,6 +56,7 @@ async function generateStudents() {
 
 document.addEventListener('DOMContentLoaded', () => {
     generateStudents();
+    document.getElementById('submitBtn').addEventListener('click', addGrade);
 });
 
 async function generateGrades() {
@@ -57,5 +74,22 @@ async function generateGrades() {
             tr.appendChild(td);
         }
         tbody.appendChild(tr);
+    }
+}
+
+async function addGrade() {
+    const diakId = document.getElementById('diakId').value;
+    const tanarId = document.getElementById('tanarId').value;
+    const tantargy = document.getElementById('tantargy').value;
+    const jegy = document.getElementById('jegy').value;
+
+    if (diakId != '' && tanarId != '' && tantargy != '' && jegy != '') {
+        const response = await POST('/api/jegyek', {
+            diakId: diakId,
+            tanarId: tanarId,
+            tantargy: tantargy,
+            jegy: jegy
+        });
+        console.log(response);
     }
 }
