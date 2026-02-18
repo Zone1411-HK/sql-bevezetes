@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Iskolai jegykezelő</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>📘 Iskolai jegykezelő rendszer</h1>
+<section>
+    <h2>👨‍🎓 Diákok</h2>
+    <table id="diakTabla">
+        <thead>
+            <tr>
+                <th>Név</th>
+                <th>Osztály</th>
+                <th>Művelet</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- JS tölti fel -->
+        </tbody>
+    </table>
+</section>
+<section>
+    <h2>📝 Jegyek</h2>
+    <table id="jegyTabla">
+        <thead>
+            <tr>
+                <th>Tantárgy</th>
+                <th>Jegy</th>
+                <th>Tanár</th>
+                <th>Dátum</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- JS tölti fel -->
+        </tbody>
+    </table>
+</section>
+<section>
+    <h2>➕ Új jegy felvétele</h2>
+    <form id="jegyForm">
+        <select id="diakId" required></select>
+        <select id="tanarId" required></select>
+        <select id="tantargy" required></select>
+        <input type="number" min="1" max="5" placeholder="Jegy" id="jegy" required>
+        <button type="submit">Mentés</button>
+    </form>
+</section>
+<script src="script.js"></script>
+</body>
+</html>

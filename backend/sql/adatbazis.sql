@@ -53,7 +53,7 @@ COLLATE utf8_hungarian_ci;
 USE szogyak;
 
 CREATE TABLE szavak(
-    azon INT NOT NULL,
+    azon INT PRIMARY KEY NOT NULL,
     szoto VARCHAR(200) NOT NULL,
     szofaj VARCHAR(200) NOT NULL,
     gyakori INT NOT NULL

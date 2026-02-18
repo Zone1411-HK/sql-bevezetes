@@ -299,6 +299,92 @@ router.post('/deleteinventory/:id', async (request, response) => {
 router.get('/import', async (request, response) => {
     try {
         await database.szoImport();
+        response.status(200).json({
+            uzenet: 'Sikeres importálás'
+        });
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+router.get('/ige500', async (request, response) => {
+    try {
+        let igek = await database.igek();
+        response.status(200).json({
+            uzenet: 'Sikeres importálás',
+            igek: igek
+        });
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+router.get('/brmellek', async (request, response) => {
+    try {
+        let melleknevek = await database.melleknev();
+        response.status(200).json({
+            uzenet: 'Sikeres importálás',
+            melleknevek: melleknevek
+        });
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+router.get('/hatar10', async (request, response) => {
+    try {
+        let hatar = await database.hatarozo();
+        response.status(200).json({
+            uzenet: 'Sikeres importálás',
+            hatarozok: hatar
+        });
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+router.get('/szofajok', async (request, response) => {
+    try {
+        let szofajok = await database.szofajok();
+        response.status(200).json({
+            uzenet: 'Sikeres importálás',
+            szofajok: szofajok
+        });
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+router.get('/tobbszoros', async (request, response) => {
+    try {
+        let tobbszoros = await database.tobbszoros();
+        response.status(200).json({
+            uzenet: 'Sikeres importálás',
+            tobbszoros: tobbszoros
+        });
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+router.get('/diakok', async (request, response) => {
+    try {
+        let diakok = await database.diakok();
+        response.status(200).json({
+            diakok: diakok
+        });
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+router.get('/jegyek/:diakId', async (request, response) => {
+    try {
+        let diak = request.params.diakId;
+        let jegyek = await database.jegyek(diak);
+        response.status(200).json({
+            result: jegyek
+        });
     } catch (error) {
         console.error(error);
     }

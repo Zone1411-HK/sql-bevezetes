@@ -90,3 +90,28 @@ Content-Type: application/json
     "product_id": 2,
     "quantity": 1
 }
+
+###
+
+GET http://127.0.0.1:3000/api/import
+###
+
+GET http://127.0.0.1:3000/api/ige500
+###
+
+GET http://127.0.0.1:3000/api/brmellek
+###
+
+GET http://127.0.0.1:3000/api/hatar10
+###
+
+GET http://127.0.0.1:3000/api/szofajok
+###
+
+GET http://127.0.0.1:3000/api/tobbszoros
+###
+
+GET http://127.0.0.1:3000/api/diakok
+###
+
+GET http://127.0.0.1:3000/api/jegyek/1

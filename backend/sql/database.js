@@ -28,6 +28,15 @@ const pool3 = mysql.createPool({
     connectionLimit: 10,
     queueLimit: 0
 });
+const pool4 = mysql.createPool({
+    host: '127.0.0.1',
+    user: 'root',
+    password: '',
+    database: 'iskola',
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
+});
 
 //!SQL Queries
 async function selectall() {
@@ -277,18 +286,121 @@ const readTextFile = async (filePath) => {
 
 async function szoImport() {
     try {
-        let text = (await readTextFile('../backend/sql/szo10000.csv')).toString().split('\n');
-        for (let i = 0; i < text.length; i++) {
-            text[i] = text[i].split(';');
-        }
-
+        let text = (await readTextFile('../backend/sql/szo10000.csv')).toString().split('\r\n');
         console.log(text);
+        for (let i = 1; i < text.length; i++) {
+            const sql = `
+            INSERT INTO szavak(azon, szoto, szofaj, gyakori)
+            VALUES(?, ?, ?, ?); 
+            `;
+            await pool3.execute(sql, text[i].split(';'));
+        }
     } catch (error) {
         console.error(error);
     }
 }
 
-szoImport();
+async function igek() {
+    try {
+        const sql = `
+        SELECT szoto
+        FROM szavak
+        WHERE szofaj LIKE "ige" AND gyakori > 499999
+        `;
+        const [rows] = await pool3.execute(sql);
+        return rows;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function melleknev() {
+    try {
+        const sql = `
+        SELECT szoto, gyakori
+        FROM szavak
+        WHERE szofaj LIKE "mn" AND szoto LIKE "br%";
+        `;
+        const [rows] = await pool3.execute(sql);
+        return rows;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function hatarozo() {
+    try {
+        const sql = `
+        SELECT szoto
+        FROM szavak
+        WHERE szofaj LIKE "hsz"
+        LIMIT 10;
+        `;
+        const [rows] = await pool3.execute(sql);
+        return rows;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function szofajok() {
+    try {
+        const sql = `
+        SELECT szofaj, COUNT(szoto)
+        FROM szavak
+        GROUP BY szofaj;
+        `;
+        const [rows] = await pool3.execute(sql);
+        return rows;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function tobbszoros() {
+    try {
+        const sql = `
+        SELECT szoto
+        FROM szavak
+        GROUP BY szoto
+        HAVING COUNT(szoto) > 2
+        `;
+        const [rows] = await pool3.execute(sql);
+        return rows;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function diakok() {
+    try {
+        const sql = `
+        SELECT nev, osztaly, id
+        FROM diak;
+        `;
+        const [rows] = await pool4.execute(sql);
+        return rows;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+async function jegyek(diakId) {
+    try {
+        const sql = `
+        SELECT tantargy, jegy, tanar.nev, datum
+        FROM jegy
+        INNER JOIN diak ON jegy.diak_id = diak.id
+        INNER JOIN tanar ON jegy.tanar_id = tanar.id
+        WHERE diak_id = ?
+        `;
+        const [rows] = await pool4.execute(sql, [diakId]);
+        return rows;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 //!Export
 module.exports = {
     selectall,
@@ -310,5 +422,13 @@ module.exports = {
     selectInventory,
     inventoryAdd,
     updateinventory,
-    deleteinventory
+    deleteinventory,
+    szoImport,
+    igek,
+    melleknev,
+    hatarozo,
+    szofajok,
+    tobbszoros,
+    diakok,
+    jegyek
 };
